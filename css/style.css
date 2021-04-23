@@ -1,0 +1,31 @@
+main {
+    width: 90%;
+}
+
+.board {
+    width: 80%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: green;
+}
+
+.card {
+    width: 75px;
+    height: 100px;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 2px solid gold;
+}
+
+#dealer,
+#player {
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 200px;
+    min-height: 200px;
+    background-color: lightgreen;
+    margin: 10px;
+}
