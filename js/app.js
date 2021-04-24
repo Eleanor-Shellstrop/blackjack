@@ -76,33 +76,44 @@ class Deck {
 const deal = document.getElementById("deal");
 const dealer = document.getElementById("dealer");
 const player = document.getElementById("player");
-
+let playerTotal = [];
+let dealerTotal = [];
+let playerScore = 0;
+let dealerScore = 0;
 
 //*  GLOBAL FUNCTIONS  -------------------------------------------------------------
 
-function dealCard(person) {
-    const card = document.createElement('div');
-    const randomCard = Math.floor(Math.random() * newDeck.cards.length);
-    card.className = 'card container';
-    const chosenCard = newDeck.cards[randomCard];
-    card.innerHTML = chosenCard.value + " " + chosenCard.suit;
-    if (chosenCard.suit == "&#9829;" || chosenCard.suit == "&#9830;") {
-      card.style.color = 'red';
+//  Deal a card
+function dealCard(person, array) {
+  const card = document.createElement('div');
+  card.className = 'card container';
+  let randomCard = newDeck.cards.pop();
+  card.innerHTML = randomCard.value + " " + randomCard.suit;
+  if (randomCard.suit == "&#9829;" || randomCard.suit == "&#9830;") {
+    card.style.color = 'red';
     }
-    let removedCard = newDeck.cards.splice(randomCard, 1);
-    person.appendChild(card);
-    console.log(removedCard);
+  array.push(randomCard.points);
+  person.appendChild(card);
 }
 
+//  Add the total of cards
+function addTotal(array, personScore) {
+  if (array.length == 2) {
+    personScore = array[0] + array[1];
+  }
+}
 
 //*  EVENT LISTENERS ---------------------------------------------------------------
 
 //  Deal button
 
 deal.addEventListener("click", () => {
-    dealCard(player);
-    dealCard(dealer);
-    dealCard(player);
-    dealCard(dealer);
+    dealCard(player, playerTotal);
+    dealCard(dealer, dealerTotal);
+    dealCard(player, playerTotal);
+    dealCard(dealer, dealerTotal);
     deal.disabled = true;
+    addTotal(playerTotal, playerScore);
+    addTotal(dealerTotal, dealerScore);
 });
+
