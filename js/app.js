@@ -97,19 +97,16 @@ function dealCard(person, array) {
   person.appendChild(card);
 }
 
-//  Add the total of cards
-// function addTotal(array, personScore) {
-//   for (let i = 0; i < array.length; i++) {
-//     personScore += array[i];
-//   }
-  // if (array.length == 2) {
-  //   personScore = array[0] + array[1];
-  // }
-// }
 
 function addPlayerScore () {
   for (let i = 0; i < playersHand.length; i++) {
     playerScore += playersHand[i];
+  }
+}
+
+function addDealerScore () {
+  for (let i = 0; i < dealersHand.length; i++) {
+    dealerScore += dealersHand[i];
   }
 }
 
@@ -136,5 +133,15 @@ hit.addEventListener("click", () => {
     alert("Player Busts");
   } else {
     playerScore = 0;
+  }
+})
+
+// TODO: Finish this function
+
+stand.addEventListener("click", () => {
+  addDealerScore();
+  if (dealerScore < 13) {
+    dealer.firstElementChild.classList.remove("back");
+    dealCard(dealer, dealersHand);
   }
 })
