@@ -74,10 +74,11 @@ class Deck {
 //*  GLOBAL VARIABLES  -------------------------------------------------------------
 
 const deal = document.getElementById("deal");
+const hit = document.getElementById("hit");
 const dealer = document.getElementById("dealer");
 const player = document.getElementById("player");
-let playerTotal = [];
-let dealerTotal = [];
+let playersHand = [];
+let dealersHand = [];
 let playerScore = 0;
 let dealerScore = 0;
 
@@ -97,9 +98,18 @@ function dealCard(person, array) {
 }
 
 //  Add the total of cards
-function addTotal(array, personScore) {
-  if (array.length == 2) {
-    personScore = array[0] + array[1];
+// function addTotal(array, personScore) {
+//   for (let i = 0; i < array.length; i++) {
+//     personScore += array[i];
+//   }
+  // if (array.length == 2) {
+  //   personScore = array[0] + array[1];
+  // }
+// }
+
+function addPlayerScore () {
+  for (let i = 0; i < playersHand.length; i++) {
+    playerScore += playersHand[i];
   }
 }
 
@@ -108,13 +118,23 @@ function addTotal(array, personScore) {
 //  Deal button
 
 deal.addEventListener("click", () => {
-    dealCard(player, playerTotal);
-    dealCard(dealer, dealerTotal);
+    dealCard(player, playersHand);
+    dealCard(dealer, dealersHand);
     dealer.firstElementChild.classList.toggle("back");
-    dealCard(player, playerTotal);
-    dealCard(dealer, dealerTotal);
+    dealCard(player, playersHand);
+    dealCard(dealer, dealersHand);
     deal.disabled = true;
-    addTotal(playerTotal, playerScore);
-    addTotal(dealerTotal, dealerScore);
+    // addTotal(dealersHand, dealerScore);
 });
 
+//  Hit button
+
+hit.addEventListener("click", () => {
+  dealCard(player, playersHand);
+  addPlayerScore();
+  if (playerScore > 21) {
+    alert("Player Busts");
+  } else {
+    playerScore = 0;
+  }
+})
