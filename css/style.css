@@ -29,3 +29,10 @@ main {
     background-color: lightgreen;
     margin: 10px;
 }
+
+.back {
+    background-image: url("../images/honeycomb.png");
+    background-size: cover;
+    background-position: center;
+    font-size: 0;   
+}

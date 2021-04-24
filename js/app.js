@@ -110,6 +110,7 @@ function addTotal(array, personScore) {
 deal.addEventListener("click", () => {
     dealCard(player, playerTotal);
     dealCard(dealer, dealerTotal);
+    dealer.firstElementChild.classList.toggle("back");
     dealCard(player, playerTotal);
     dealCard(dealer, dealerTotal);
     deal.disabled = true;
