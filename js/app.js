@@ -77,6 +77,7 @@ const deal = document.getElementById("deal");
 const hit = document.getElementById("hit");
 const dealer = document.getElementById("dealer");
 const player = document.getElementById("player");
+const result = document.getElementById("result");
 let playersHand = [];
 let dealersHand = [];
 let playerScore = 0;
@@ -97,6 +98,12 @@ function dealCard(person, array) {
   person.appendChild(card);
 }
 
+//  Remove back of the dealer card
+function removeBack () {
+  dealer.firstElementChild.classList.remove("back");
+}
+
+//  TODO: Refactor the following 4 functions
 
 function addPlayerScore () {
   for (let i = 0; i < playersHand.length; i++) {
@@ -104,9 +111,40 @@ function addPlayerScore () {
   }
 }
 
+
 function addDealerScore () {
   for (let i = 0; i < dealersHand.length; i++) {
     dealerScore += dealersHand[i];
+  }
+}
+
+function checkPlayersScore() {
+  addPlayerScore();
+  if (playerScore < 21) {
+    playerScore = 0;
+  } else if (playerScore === 21) {
+    removeBack();
+    result.style.display = "flex";
+    result.innerText = "Player has 21.";
+  } else {
+    removeBack();
+    result.style.display = "flex";
+    result.innerText = "Player has bust.";
+  }
+}
+
+function checkDealersScore() {
+  addDealerScore();
+  if (dealerScore < 21) {
+    dealerScore = 0;
+  } else if (dealerScore === 21) {
+    removeBack();
+    result.style.display = "flex";
+    result.innerText = "Dealer has 21.";
+  } else {
+    removeBack();
+    result.style.display = "flex";
+    result.innerText = "Dealer has bust.";
   }
 }
 
@@ -121,27 +159,23 @@ deal.addEventListener("click", () => {
     dealCard(player, playersHand);
     dealCard(dealer, dealersHand);
     deal.disabled = true;
-    // addTotal(dealersHand, dealerScore);
+    checkPlayersScore();
 });
 
 //  Hit button
 
 hit.addEventListener("click", () => {
   dealCard(player, playersHand);
-  addPlayerScore();
-  if (playerScore > 21) {
-    alert("Player Busts");
-  } else {
-    playerScore = 0;
-  }
+  checkPlayersScore();
 })
 
 // TODO: Finish this function
 
 stand.addEventListener("click", () => {
-  addDealerScore();
-  if (dealerScore < 13) {
-    dealer.firstElementChild.classList.remove("back");
+  checkDealersScore();
+  if (dealerScore < 17) {
+    removeBack();
     dealCard(dealer, dealersHand);
   }
 })
+
