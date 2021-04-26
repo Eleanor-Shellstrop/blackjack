@@ -59,12 +59,32 @@ class Deck {
       return this;
   }
 }
+
+class Player {
+  constructor (name) {
+    this.name = name;
+    this.score = 0;
+  }
+  getName() {
+    const playerName = prompt("Player name: ");
+    document.getElementById("playerName").innerText = playerName + "'s Hand";
+  }
+}
+
+class Dealer {
+  constructor(){
+    this.score = 0;
+  }
+}
   
   
   //  MAKE NEW DECK AND SHUFFLE
   const newDeck = new Deck;
   newDeck.shuffle();
-//   newDeck.render();
+
+  const newPlayer = new Player;
+  newPlayer.getName();
+  const newDealer = new Dealer;
 
 
 /*===================================================================================================
@@ -86,7 +106,7 @@ let dealerScore = 0;
 //*  GLOBAL FUNCTIONS  -------------------------------------------------------------
 
 //  Deal a card
-function dealCard(person, array) {
+function dealCard(person, array, score) {
   const card = document.createElement('div');
   card.className = 'card container';
   let randomCard = newDeck.cards.pop();
@@ -95,55 +115,53 @@ function dealCard(person, array) {
     card.style.color = 'red';
     }
   array.push(randomCard.points);
+  score += randomCard.points;
   person.appendChild(card);
 }
 
 //  Remove back of the dealer card
-function removeBack () {
+
+
+function changeResultDisplay () {
   dealer.firstElementChild.classList.remove("back");
+  result.style.display = "flex";
 }
 
 //  TODO: Refactor the following 4 functions
 
-function addPlayerScore () {
-  for (let i = 0; i < playersHand.length; i++) {
-    playerScore += playersHand[i];
-  }
-}
+// function addPlayerScore () {
+//   for (let i = 0; i < playersHand.length; i++) {
+//     playerScore += playersHand[i];
+//   }
+// }
 
 
-function addDealerScore () {
-  for (let i = 0; i < dealersHand.length; i++) {
-    dealerScore += dealersHand[i];
-  }
-}
+// function addDealerScore () {
+//   for (let i = 0; i < dealersHand.length; i++) {
+//     dealerScore += dealersHand[i];
+//   }
+// }
 
 function checkPlayersScore() {
-  addPlayerScore();
-  if (playerScore < 21) {
-    playerScore = 0;
-  } else if (playerScore === 21) {
-    removeBack();
-    result.style.display = "flex";
+  // addPlayerScore();
+  if (playerScore === 21) {
+    changeResultDisplay();
     result.innerText = "Player has 21.";
-  } else {
-    removeBack();
-    result.style.display = "flex";
+  } 
+  if (playerScore > 21) {
+    changeResultDisplay();
     result.innerText = "Player has bust.";
   }
 }
 
 function checkDealersScore() {
-  addDealerScore();
-  if (dealerScore < 21) {
-    dealerScore = 0;
-  } else if (dealerScore === 21) {
-    removeBack();
-    result.style.display = "flex";
+  // addDealerScore();
+  if (playerScore === 21) {
+    changeResultDisplay();
     result.innerText = "Dealer has 21.";
-  } else {
-    removeBack();
-    result.style.display = "flex";
+  } 
+  if (playerScore > 21) {
+    changeResultDisplay();
     result.innerText = "Dealer has bust.";
   }
 }
@@ -153,19 +171,20 @@ function checkDealersScore() {
 //  Deal button
 
 deal.addEventListener("click", () => {
-    dealCard(player, playersHand);
-    dealCard(dealer, dealersHand);
+    dealCard(player, playersHand, playerScore);
+    dealCard(dealer, dealersHand, dealerScore);
     dealer.firstElementChild.classList.toggle("back");
-    dealCard(player, playersHand);
-    dealCard(dealer, dealersHand);
+    dealCard(player, playersHand, playerScore);
+    dealCard(dealer, dealersHand, dealerScore);
     deal.disabled = true;
     checkPlayersScore();
+    checkDealersScore();
 });
 
 //  Hit button
 
 hit.addEventListener("click", () => {
-  dealCard(player, playersHand);
+  dealCard(player, playersHand, playerScore);
   checkPlayersScore();
 })
 
@@ -175,7 +194,7 @@ stand.addEventListener("click", () => {
   checkDealersScore();
   if (dealerScore < 17) {
     removeBack();
-    dealCard(dealer, dealersHand);
+    dealCard(dealer, dealersHand, dealerScore);
   }
 })
 
