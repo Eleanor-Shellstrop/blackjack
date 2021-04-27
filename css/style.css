@@ -36,3 +36,9 @@ main {
     background-position: center;
     font-size: 0;   
 }
+
+#endGame {
+    width: 85%;
+    height: 200px;
+    flex-direction: column;
+}
