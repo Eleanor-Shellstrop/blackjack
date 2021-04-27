@@ -2,8 +2,20 @@ main {
     width: 90%;
 }
 
+.header {
+    width: 90%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header h1 {
+    padding: 20px;
+}
+
 .board {
-    width: 80%;
+    width: 90%;
     height: auto;
     display: flex;
     flex-wrap: wrap;
