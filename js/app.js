@@ -60,30 +60,75 @@ class Deck {
   }
 }
 
+//*  PLAYER CLASS ---------------------------------------------------------------------------
+
 class Player {
   constructor (name) {
     this.name = name;
     this.score = 0;
+    this.hand = [];
   }
   getName() {
     const playerName = prompt("Player name: ");
     document.getElementById("playerName").innerText = playerName + "'s Hand";
   }
+  addScore() {
+    this.score = 0;
+    for (let i = 0; i < this.hand.length; i++) {
+      const card = this.hand[i];
+      this.score += card;
+    }
+  } 
+  checkFor21() {
+    if (this.score === 21) {
+      dealer.firstElementChild.classList.toggle("back");
+      result.style.display = "flex";
+      result.innerText = "Player has 21.";
+    } 
+    if (this.score > 21) {
+      dealer.firstElementChild.classList.toggle("back");
+      result.style.display = "flex";
+      result.innerText = "Player has bust.";
+    }
+}
 }
 
+//*  DEALER CLASS ---------------------------------------------------------------------------
+
 class Dealer {
-  constructor(){
+  constructor() {
     this.score = 0;
+    this.hand = [];
+  }
+  addScore() {
+    this.score = 0;
+    for (let i = 0; i < this.hand.length; i++) {
+      const card = this.hand[i];
+      this.score += card;
+    }
+  }
+  checkFor21() {
+      if (this.score === 21) {
+        dealer.firstElementChild.classList.toggle("back");
+        result.style.display = "flex";
+        result.innerText = "Dealer has 21.";
+      } 
+      if (this.score > 21) {
+        dealer.firstElementChild.classList.toggle("back");
+        result.style.display = "flex";
+        result.innerText = "Dealer has bust.";
+      }
   }
 }
   
   
-  //  MAKE NEW DECK AND SHUFFLE
+  //  MAKE NEW DECK AND PLAYERS
   const newDeck = new Deck;
   newDeck.shuffle();
 
   const newPlayer = new Player;
   newPlayer.getName();
+
   const newDealer = new Dealer;
 
 
@@ -98,15 +143,12 @@ const hit = document.getElementById("hit");
 const dealer = document.getElementById("dealer");
 const player = document.getElementById("player");
 const result = document.getElementById("result");
-let playersHand = [];
-let dealersHand = [];
-let playerScore = 0;
-let dealerScore = 0;
+
 
 //*  GLOBAL FUNCTIONS  -------------------------------------------------------------
 
 //  Deal a card
-function dealCard(person, array, score) {
+function dealCard(person, array) {
   const card = document.createElement('div');
   card.className = 'card container';
   let randomCard = newDeck.cards.pop();
@@ -115,7 +157,6 @@ function dealCard(person, array, score) {
     card.style.color = 'red';
     }
   array.push(randomCard.points);
-  score += randomCard.points;
   person.appendChild(card);
 }
 
@@ -123,78 +164,53 @@ function dealCard(person, array, score) {
 
 
 function changeResultDisplay () {
-  dealer.firstElementChild.classList.remove("back");
+  dealer.firstElementChild.classList.toggle("back");
   result.style.display = "flex";
 }
 
-//  TODO: Refactor the following 4 functions
-
-// function addPlayerScore () {
-//   for (let i = 0; i < playersHand.length; i++) {
-//     playerScore += playersHand[i];
-//   }
-// }
-
-
-// function addDealerScore () {
-//   for (let i = 0; i < dealersHand.length; i++) {
-//     dealerScore += dealersHand[i];
-//   }
-// }
-
-function checkPlayersScore() {
-  // addPlayerScore();
-  if (playerScore === 21) {
-    changeResultDisplay();
-    result.innerText = "Player has 21.";
-  } 
-  if (playerScore > 21) {
-    changeResultDisplay();
-    result.innerText = "Player has bust.";
-  }
-}
-
-function checkDealersScore() {
-  // addDealerScore();
-  if (playerScore === 21) {
-    changeResultDisplay();
-    result.innerText = "Dealer has 21.";
-  } 
-  if (playerScore > 21) {
-    changeResultDisplay();
-    result.innerText = "Dealer has bust.";
-  }
-}
 
 //*  EVENT LISTENERS ---------------------------------------------------------------
 
 //  Deal button
 
 deal.addEventListener("click", () => {
-    dealCard(player, playersHand, playerScore);
-    dealCard(dealer, dealersHand, dealerScore);
+    dealCard(player, newPlayer.hand);
+    dealCard(dealer, newDealer.hand);
     dealer.firstElementChild.classList.toggle("back");
-    dealCard(player, playersHand, playerScore);
-    dealCard(dealer, dealersHand, dealerScore);
+    dealCard(player, newPlayer.hand);
+    dealCard(dealer, newDealer.hand);
     deal.disabled = true;
-    checkPlayersScore();
-    checkDealersScore();
+    newPlayer.addScore();
+    newPlayer.checkFor21();
+    newDealer.addScore();
+    newDealer.checkFor21();
 });
 
 //  Hit button
 
 hit.addEventListener("click", () => {
-  dealCard(player, playersHand, playerScore);
-  checkPlayersScore();
+  dealCard(player, newPlayer.hand);
+  // newPlayer.score = 0;
+  newPlayer.addScore();
+  newPlayer.checkFor21();
 })
 
 // TODO: Finish this function
 
 stand.addEventListener("click", () => {
-  checkDealersScore();
-  if (dealerScore < 17) {
-    removeBack();
-    dealCard(dealer, dealersHand, dealerScore);
+  newDealer.addScore();
+  newDealer.checkFor21();
+  if (newDealer.score < 17) {
+    dealer.firstElementChild.classList.toggle("back");
+    dealCard(dealer, newDealer.hand);
+    newDealer.addScore();
   }
+  setTimeout(() => {
+    newDealer.addScore();
+    if (newDealer.score < 17) {
+      dealCard(dealer, newDealer.hand);
+      newDealer.addScore();
+    }
+  }, 1000);
 })
 
