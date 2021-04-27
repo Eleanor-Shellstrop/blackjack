@@ -4,10 +4,15 @@ main {
 
 .header {
     width: 90%;
-    height: 200px;
+    height: 100px;
+    margin-bottom: 5%;
+    margin-top: 5%;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: gold;
+    box-shadow: inset 0 0 20px darkgoldenrod,
+                0 10px 10px dimgray;
 }
 
 .header h1 {
@@ -19,7 +24,15 @@ main {
     height: auto;
     display: flex;
     flex-wrap: wrap;
-    background-color: green;
+    background-image: url("../images/table.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.board h2 {
+    padding: 10px;
+    color: white;
+    text-shadow: 2px 2px 2px black;
 }
 
 .card {
@@ -30,6 +43,8 @@ main {
     flex-direction: column;
     background-color: white;
     border: 2px solid gold;
+    box-shadow: 3px 3px 5px black, -5px 5px 3px dimgray;
+    font-size: 2em;
 }
 
 #dealer,
@@ -38,7 +53,6 @@ main {
     flex-wrap: wrap;
     min-width: 200px;
     min-height: 200px;
-    background-color: lightgreen;
     margin: 10px;
 }
 
