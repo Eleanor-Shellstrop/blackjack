@@ -2,6 +2,10 @@
     font-family: 'Lakki Reddy', cursive;
 }
 
+body {
+    background-color: ivory;
+}
+
 main {
     width: 90%;
 }
@@ -74,8 +78,8 @@ main {
     width: 85%;
     height: 200px;
     flex-direction: column;
-    transform: translateY(-500px);
-    background-color: cornsilk;
+    transform: translateY(-400px);
+    background-color: rgba(255, 248, 220, 0.85);
     box-shadow: 0 0 20px yellowgreen;
     padding: 25px;
     font-size: 1.5em;

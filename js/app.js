@@ -1,3 +1,6 @@
+//  TODO: If dealer gets 21 on draw, card doesn't flip
+//  TODO: Dealer drew 5 cards before getting over 16, no results displayed
+
 /*===================================================================================================
           CLASSES
 ===================================================================================================*/
@@ -113,10 +116,11 @@ class Dealer {
     }
   }
   checkFor21() {
-      if (dealer.firstElementChild.className == "back") {
-        dealer.firstElementChild.classList.toggle("back");
-      }
+      
       if (this.score === 21) {
+        if (dealer.firstElementChild.className == "back") {
+        dealer.firstElementChild.classList.toggle("back");
+        }
         endGame.style.display = "flex";
         result.innerText = "Dealer has 21.";
       } 
