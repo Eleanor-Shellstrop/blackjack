@@ -1,6 +1,3 @@
-//  TODO: If dealer gets 21 on draw, card doesn't flip
-//  TODO: Dealer drew 5 cards before getting over 16, no results displayed
-
 /*===================================================================================================
           CLASSES
 ===================================================================================================*/
@@ -84,7 +81,9 @@ class Player {
   } 
   checkFor21() {
     if (this.score === 21) {
-      dealer.firstElementChild.classList.toggle("back");
+      if (dealer.firstElementChild.classList.contains("back")) {
+        dealer.firstElementChild.classList.toggle("back");
+      }
       endGame.style.display = "flex";
       result.innerText = "Player has 21.";
     } 
@@ -94,7 +93,9 @@ class Player {
       } 
     }
     if (this.score > 21) {
-      dealer.firstElementChild.classList.toggle("back");
+      if (dealer.firstElementChild.classList.contains("back")) {
+        dealer.firstElementChild.classList.toggle("back");
+      }
       endGame.style.display = "flex";
       result.innerText = "Player has bust.";
     }
@@ -118,8 +119,8 @@ class Dealer {
   checkFor21() {
       
       if (this.score === 21) {
-        if (dealer.firstElementChild.className == "back") {
-        dealer.firstElementChild.classList.toggle("back");
+        if (dealer.firstElementChild.classList.contains("back")) {
+          dealer.firstElementChild.classList.toggle("back");
         }
         endGame.style.display = "flex";
         result.innerText = "Dealer has 21.";
@@ -137,8 +138,11 @@ class Dealer {
 }
   
   
-  //  MAKE NEW DECK AND PLAYERS
+  //  MAKE 4 NEW DECKS AND PLAYERS
   const newDeck = new Deck;
+  newDeck.createDeck();
+  newDeck.createDeck();
+  newDeck.createDeck();
   newDeck.shuffle();
 
   const newPlayer = new Player;
@@ -277,11 +281,13 @@ stand.addEventListener("click", () => {
   setTimeout(() => {
     newDealer.addScore();
     newDealer.checkFor21();
+    dealerHandOver16();
     willDealerHit();
   }, 1000);
   setTimeout(() => {
     newDealer.addScore();
     newDealer.checkFor21();
+    dealerHandOver16();
     willDealerHit();
   }, 1000);
   dealerHandOver16();
@@ -294,3 +300,6 @@ stand.addEventListener("click", () => {
 playAgain.addEventListener("click", () => {
   resetGame();
 })
+
+
+
