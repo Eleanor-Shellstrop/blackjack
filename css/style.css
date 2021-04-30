@@ -52,12 +52,14 @@ main {
     height: auto;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     background-image: url("../images/table.png");
     background-size: cover;
     background-position: center;
 }
 
 .board h2 {
+    margin-top: 10px;
     padding: 10px;
     color: white;
     text-shadow: 2px 2px 2px black;
@@ -100,11 +102,14 @@ main {
 /*      Results of Round        */
 
 #endGame {
-    width: 85%;
+    width: 60%;
     height: 200px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     transform: translateY(-400px);
-    background-color: rgba(255, 248, 220, 0.85);
+    background-color: rgba(255, 248, 220, 0.90);
     box-shadow: 0 0 20px yellowgreen;
     padding: 25px;
     font-size: 1.5em;
