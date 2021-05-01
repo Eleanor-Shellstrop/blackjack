@@ -78,28 +78,25 @@ class Player {
       const card = this.hand[i];
       this.score += card;
     }
-  } 
-  checkFor21() {
-    if (this.score === 21) {
-      if (dealer.firstElementChild.classList.contains("back")) {
-        dealer.firstElementChild.classList.toggle("back");
-      }
-      endGame.style.display = "flex";
-      result.innerText = "Player has 21.";
-    } 
+  }  
+  checkFor21OnDeal() {
+    if (this.score == 21) {
+      showResult();
+      result.innerText = "You drew 21. You win!"; 
+    }
+  }
+  checkForBusts() {
     for (let i = 0; i < this.hand.length; i++) {
       if (this.hand[i] == 11 && this.score > 21) {
         this.score = this.score - 10;
-      } 
-    }
-    if (this.score > 21) {
-      if (dealer.firstElementChild.classList.contains("back")) {
-        dealer.firstElementChild.classList.toggle("back");
+      } else if (this.score > 21) {
+      showResult();
+      result.innerText = "You bust. Dealer wins."
+      } else {
+        return;
       }
-      endGame.style.display = "flex";
-      result.innerText = "Player has bust.";
     }
-}
+  }
 }
 
 //*  DEALER CLASS ---------------------------------------------------------------------------
@@ -112,28 +109,54 @@ class Dealer {
   addScore() {
     this.score = 0;
     for (let i = 0; i < this.hand.length; i++) {
+        if (this.hand[i] == 11 && this.score > 21) {
+          this.score -= 10;
+        } 
+      }
+    for (let i = 0; i < this.hand.length; i++) {
       const card = this.hand[i];
       this.score += card;
     }
   }
-  checkFor21() {
-      
-      if (this.score === 21) {
-        if (dealer.firstElementChild.classList.contains("back")) {
-          dealer.firstElementChild.classList.toggle("back");
-        }
-        endGame.style.display = "flex";
-        result.innerText = "Dealer has 21.";
-      } 
-      for (let i = 0; i < this.hand.length; i++) {
-        if (this.hand[i] == 11 && this.score > 21) {
-          this.score = this.score - 10;
-        } 
+  checkFor21OnDeal() {
+    if (this.score == 21) {
+      showResult();
+      result.innerText = "Dealer drew 21. Dealer wins.";
+    }
+  }
+  checkForBusts() {
+    for (let i = 0; i < this.hand.length; i++) {
+      if (this.hand[i] == 11 && this.score > 21) {
+        this.score = this.score - 10;
+      } else if (this.score > 21) {
+      showResult();
+      result.innerText = "Dealer busts. You win!"
+      } else {
+        return;
       }
-      if (this.score > 21) {
-        endGame.style.display = "flex";
-        result.innerText = "Dealer has bust.";
+    }
+  }
+  willDealerHit() {
+    if (this.score < 17) {
+      dealCard(dealer, this.hand);
+      this.addScore();
+    }
+  }
+  dealerHandOver16() {
+    if (this.score > 16 && this.score < 21) {
+      if (newPlayer.score > newDealer.score) {
+        showResult();
+        result.innerText = "You win!"
+      } else if (newPlayer.score < newDealer.score) {
+        showResult();
+        result.innerText = "Dealer wins.";
+      } else if (newPlayer.score == newDealer.score) {
+        showResult();
+        result.innerText = "Stand-off, no winner";
+      } else {
+        console.log(outcome);
       }
+    }
   }
 }
   
@@ -165,11 +188,14 @@ const player = document.getElementById("player");
 const endGame = document.getElementById("endGame");
 const result = document.getElementById("result");
 const playAgain = document.getElementById("playAgain");
+const playerChips = document.getElementById('playerChips');
+let chips = 100;
 
 
 //*  GLOBAL FUNCTIONS  -------------------------------------------------------------
 
-//  Deal a card
+//  Deal a card   ................................................
+
 function dealCard(person, array) {
   const card = document.createElement('div');
   card.className = 'card container';
@@ -182,34 +208,30 @@ function dealCard(person, array) {
   person.appendChild(card);
 }
 
-//  Check dealer's hand for to place new cards if under 17
-
-function willDealerHit() {
-  if (newDealer.score < 17) {
-    dealCard(dealer, newDealer.hand);
-    newDealer.addScore();
-    newDealer.checkFor21();
-  }
+function showResult() {
+  endGame.style.display = "flex";
 }
 
-// If no one has bust and both players stand
 
-function dealerHandOver16() {
-    if (newDealer.score > 16 && newDealer.score < 21) {
-    if (newDealer.score > newPlayer.score) {
-      endGame.style.display = "flex";
-      result.innerText = "Dealer wins";
-    } else if (newDealer.score == newPlayer.score) {
-      endGame.style.display = "flex";
-      result.innerText = "Stand-off, no winner";
-    } else {
-      endGame.style.display = "flex";
-      result.innerText = "Player wins";
-    }
+//  If no 21 on deal or busts, see who wins ......................
+
+function whoWinsTheRound() {
+  if (newPlayer.score > newDealer.score) {
+    showResult();
+    result.innerText = "You win!"
+  } else if (newPlayer.score < newDealer.score) {
+    showResult();
+    result.innerText = "Dealer wins.";
+  } else if (newPlayer.score == newDealer.score) {
+    showResult();
+    result.innerText = "Stand-off, no winner";
   } else {
-    newDealer.hand = newDealer.hand;
+    console.log(outcome);
   }
 }
+
+
+//  Reset all fields  .........................................
 
 function resetGame() {
   endGame.style.display = "none";
@@ -224,7 +246,6 @@ function resetGame() {
 }
 
 function removePlayerCards(){
-  // let player = document.getElementById("player");
   let cards = player.getElementsByClassName('card');
    //   Iterate and remove each child
    for (let i = cards.length - 1; i >= 0; i--) {
@@ -234,7 +255,6 @@ function removePlayerCards(){
 }
 
 function removeDealerCards(){
-  // let dealer = document.getElementById("dealer");
   let cards = dealer.getElementsByClassName('card container');
    //   Iterate and remove each child
    for (let i = cards.length - 1; i >= 0; i--) {
@@ -255,19 +275,19 @@ deal.addEventListener("click", () => {
     dealCard(dealer, newDealer.hand);
     deal.disabled = true;
     newPlayer.addScore();
-    newPlayer.checkFor21();
     newDealer.addScore();
-    newDealer.checkFor21();
+    newPlayer.checkFor21OnDeal();
+    newDealer.checkFor21OnDeal();
 });
 
 //------------------------------
 //  Hit button
 
 hit.addEventListener("click", () => {
-  dealCard(player, newPlayer.hand);
-  // newPlayer.score = 0;
   newPlayer.addScore();
-  newPlayer.checkFor21();
+  dealCard(player, newPlayer.hand);
+  newPlayer.addScore();
+  newPlayer.checkForBusts();
 });
 
 //------------------------------
@@ -276,22 +296,22 @@ hit.addEventListener("click", () => {
 stand.addEventListener("click", () => {
   dealer.firstElementChild.classList.toggle("back");
   newDealer.addScore();
-  newDealer.checkFor21();
-  willDealerHit();
+  newDealer.willDealerHit();
   setTimeout(() => {
     newDealer.addScore();
-    newDealer.checkFor21();
-    dealerHandOver16();
-    willDealerHit();
+    newDealer.checkForBusts();
+    newDealer.dealerHandOver16();
+    newDealer.willDealerHit();
   }, 1000);
+  newDealer.addScore();
   setTimeout(() => {
     newDealer.addScore();
-    newDealer.checkFor21();
-    dealerHandOver16();
-    willDealerHit();
+    newDealer.checkForBusts();
+    newDealer.dealerHandOver16();
+    newDealer.willDealerHit();
   }, 1000);
-  dealerHandOver16();
-  newDealer.checkFor21();
+  newDealer.addScore();
+  newDealer.dealerHandOver16();
 });
 
 //------------------------------
@@ -299,7 +319,4 @@ stand.addEventListener("click", () => {
 
 playAgain.addEventListener("click", () => {
   resetGame();
-})
-
-
-
+});
