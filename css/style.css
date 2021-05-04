@@ -52,7 +52,6 @@ main {
     height: auto;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     background-image: url("../images/table.png");
     background-size: cover;
     background-position: center;
@@ -73,6 +72,12 @@ main {
     display: flex;
     flex-wrap: wrap;
     background-color: rgba(255, 255, 255, 0.70);
+}
+
+#playerChips {
+    justify-content: center;
+    align-items: center;
+    color: white;
 }
 
 /* ------------------------------------------- */

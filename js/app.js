@@ -82,7 +82,8 @@ class Player {
   checkFor21OnDeal() {
     if (this.score == 21) {
       showResult();
-      result.innerText = "You drew 21. You win!"; 
+      result.innerText = "You drew 21. You win!";
+
     }
   }
   checkForBusts() {
@@ -90,8 +91,9 @@ class Player {
       if (this.hand[i] == 11 && this.score > 21) {
         this.score = this.score - 10;
       } else if (this.score > 21) {
-      showResult();
-      result.innerText = "You bust. Dealer wins."
+        showResult();
+        result.innerText = "You bust. Dealer wins. Player loses 5 chips";
+
       } else {
         return;
       }
@@ -109,57 +111,53 @@ class Dealer {
   addScore() {
     this.score = 0;
     for (let i = 0; i < this.hand.length; i++) {
-        if (this.hand[i] == 11 && this.score > 21) {
+      const card = this.hand[i];
+      this.score += card;
+        if (this.hand[i] === 11 && this.score > 21) {
           this.score -= 10;
         } 
       }
-    for (let i = 0; i < this.hand.length; i++) {
-      const card = this.hand[i];
-      this.score += card;
-    }
   }
   checkFor21OnDeal() {
     if (this.score == 21) {
+      dealer.firstElementChild.classList.toggle("back");
       showResult();
       result.innerText = "Dealer drew 21. Dealer wins.";
+
     }
   }
-  checkForBusts() {
-    for (let i = 0; i < this.hand.length; i++) {
-      if (this.hand[i] == 11 && this.score > 21) {
-        this.score = this.score - 10;
-      } else if (this.score > 21) {
-      showResult();
-      result.innerText = "Dealer busts. You win!"
-      } else {
-        return;
+  checkHand() {
+    this.addScore();
+      if (this.score > 21) {
+        showResult();
+        result.innerText = "Dealer busts. You win!";
+ 
       }
-    }
-  }
-  willDealerHit() {
+    
     if (this.score < 17) {
       dealCard(dealer, this.hand);
       this.addScore();
     }
-  }
-  dealerHandOver16() {
     if (this.score > 16 && this.score < 21) {
       if (newPlayer.score > newDealer.score) {
         showResult();
-        result.innerText = "You win!"
+        result.innerText = "You win!";
+        return;
       } else if (newPlayer.score < newDealer.score) {
         showResult();
         result.innerText = "Dealer wins.";
+        return;
       } else if (newPlayer.score == newDealer.score) {
         showResult();
         result.innerText = "Stand-off, no winner";
+        return;
       } else {
         console.log(outcome);
+        return;
       }
     }
   }
 }
-  
   
   //  MAKE 4 NEW DECKS AND PLAYERS
   const newDeck = new Deck;
@@ -169,7 +167,7 @@ class Dealer {
   newDeck.shuffle();
 
   const newPlayer = new Player;
-  // newPlayer.getName();
+  newPlayer.getName();
 
   const newDealer = new Dealer;
 
@@ -185,11 +183,11 @@ const deal = document.getElementById("deal");
 const hit = document.getElementById("hit");
 const dealer = document.getElementById("dealer");
 const player = document.getElementById("player");
+let playerChips = document.getElementById("playerChips");
+let chips = 100;
 const endGame = document.getElementById("endGame");
 const result = document.getElementById("result");
 const playAgain = document.getElementById("playAgain");
-const playerChips = document.getElementById('playerChips');
-let chips = 100;
 
 
 //*  GLOBAL FUNCTIONS  -------------------------------------------------------------
@@ -208,32 +206,42 @@ function dealCard(person, array) {
   person.appendChild(card);
 }
 
+//  Display the chips   ..........................................
+
+playerChips.innerText = "Chips: $" + chips;
+
+
+//  Update the chips   ...........................................
+
+function updateChips(){
+  if (result.innerText.includes("win")) {
+    if (result.innerText.includes('!')) {
+      chips += 5;
+      playerChips.innerText = "Chips: $" + chips;
+      return;
+    } else if (result.innerText.includes('Stand-off')) {
+      chips = chips;
+      return;
+    } else {
+      chips -= 5;
+      playerChips.innerText = "Chips: $" + chips;
+      return;
+    }
+  }
+}
+
+
+//  Change endGame display from "none" to "flex"   ................
+
 function showResult() {
   endGame.style.display = "flex";
 }
 
 
-//  If no 21 on deal or busts, see who wins ......................
-
-function whoWinsTheRound() {
-  if (newPlayer.score > newDealer.score) {
-    showResult();
-    result.innerText = "You win!"
-  } else if (newPlayer.score < newDealer.score) {
-    showResult();
-    result.innerText = "Dealer wins.";
-  } else if (newPlayer.score == newDealer.score) {
-    showResult();
-    result.innerText = "Stand-off, no winner";
-  } else {
-    console.log(outcome);
-  }
-}
-
-
-//  Reset all fields  .........................................
+//  Reset all fields  ............................................
 
 function resetGame() {
+  updateChips();
   endGame.style.display = "none";
   result.innerText = "";
   newPlayer.hand = [];
@@ -295,25 +303,32 @@ hit.addEventListener("click", () => {
 
 stand.addEventListener("click", () => {
   dealer.firstElementChild.classList.toggle("back");
-  newDealer.addScore();
-  newDealer.willDealerHit();
   setTimeout(() => {
-    newDealer.addScore();
-    newDealer.checkForBusts();
-    newDealer.dealerHandOver16();
-    newDealer.willDealerHit();
+    newDealer.checkHand();
   }, 1000);
-  newDealer.addScore();
-  setTimeout(() => {
-    newDealer.addScore();
-    newDealer.checkForBusts();
-    newDealer.dealerHandOver16();
-    newDealer.willDealerHit();
-  }, 1000);
-  newDealer.addScore();
-  newDealer.dealerHandOver16();
+  if (result.innerText.indexOf("win") === -1) {
+      setTimeout(() => {
+        newDealer.checkHand();
+      }, 1000);
+  } 
+  if (result.innerText.indexOf("win") === -1) {
+      setTimeout(() => {
+      newDealer.checkHand();
+    }, 1000);
+  }
+  if (result.innerText.indexOf("win") === -1) {
+      setTimeout(() => {
+      newDealer.checkHand();
+    }, 1000);
+  }
+  if (result.innerText.indexOf("win") === -1) {
+      setTimeout(() => {
+      newDealer.checkHand();
+    }, 1000);
+  }
 });
 
+ 
 //------------------------------
 //  Play again button
 
