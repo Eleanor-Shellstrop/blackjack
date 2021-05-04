@@ -92,7 +92,7 @@ class Player {
         this.score = this.score - 10;
       } else if (this.score > 21) {
         showResult();
-        result.innerText = "You bust. Dealer wins. Player loses 5 chips";
+        result.innerText = "You bust. Dealer wins.";
 
       } else {
         return;
