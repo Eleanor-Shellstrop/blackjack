@@ -30,9 +30,11 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url("../images/header.png");
-    background-size: cover;
-    box-shadow: 0 10px 10px dimgray;
+    background: palevioletred;
+    box-shadow: 0 10px 10px dimgray, 
+                inset 5px 5px 7px white, 
+                inset -6px -5px 5px pink;
+    border-radius: 15px;
 }
 
 .header h1 {
@@ -52,12 +54,15 @@ main {
     height: auto;
     display: flex;
     flex-wrap: wrap;
-    background-image: url("../images/table.png");
+    /* background-image: url("../images/table.png");
     background-size: cover;
-    background-position: center;
+    background-position: center; */
+    background: #677E71;
+    border: 5px solid #EBDB61;
 }
 
 .board h2 {
+    width: 100%;
     margin-top: 10px;
     padding: 10px;
     color: white;
@@ -128,14 +133,14 @@ button {
     border-radius: 15px;
     padding: 15px 15px 5px 15px;
     margin: 10px;
-    background-color: #FFD8CF;
+    background-color: #E4DFE8;
     border: none;
     box-shadow: 0 2px 2px dimgray;
 
 }
 
 button:active {
-    background-color: #FFD8CF;
+    background-color: #8E6A7A;
     box-shadow: none;
     transform: translateY(3px);
 }

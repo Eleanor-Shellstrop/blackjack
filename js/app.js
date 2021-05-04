@@ -167,7 +167,7 @@ class Dealer {
   newDeck.shuffle();
 
   const newPlayer = new Player;
-  newPlayer.getName();
+  // newPlayer.getName();
 
   const newDealer = new Dealer;
 
