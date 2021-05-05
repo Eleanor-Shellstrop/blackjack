@@ -56,9 +56,6 @@ main {
     height: auto;
     display: flex;
     flex-wrap: wrap;
-    /* background-image: url("../images/table.png");
-    background-size: cover;
-    background-position: center; */
     background: #ff9800;
     border: 5px solid #EBDB61;
 }
@@ -145,7 +142,7 @@ button {
     background-color: lightpink;
     border: none;
     box-shadow: 0 2px 2px dimgray;
-
+    text-shadow: 2px 2px 2px white;
 }
 
 button:active {
@@ -203,5 +200,30 @@ button:active {
     }
     #endGame {
         transform: translateY(-600px);
+    }
+}
+
+@media (min-width: 1200px) {
+    .board {
+        justify-content: space-evenly;
+    }
+    #dealerSection,
+    #playerSection {
+        width: 40%;
+    }
+    #playerNameAndChips {
+        border: none;
+        padding: 0;
+        margin-top: 0;
+    }
+    #playerChips {
+        width: auto;
+        font-size: 1.5em;
+    }
+    #buttonGroup {
+        justify-content: flex-end;
+    }
+    button {
+        margin: 0px 20px;
     }
 }

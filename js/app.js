@@ -69,8 +69,8 @@ class Player {
     this.hand = [];
   }
   getName() {
-    const playerName = prompt("Player name: ");
-    if (playerName == null) {
+    let playerName = prompt("Player name: ");
+    if (playerName == null || playerName == "") {
       playerName = "Player";
     }
     document.getElementById("playerName").innerText = playerName + "'s Hand";
