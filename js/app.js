@@ -90,16 +90,17 @@ class Player {
     for (let i = 0; i < this.hand.length; i++) {
       if (this.hand[i] == 11 && this.score > 21) {
         this.score = this.score - 10;
-      } else if (this.score > 21) {
-        showResult();
-        result.innerText = "You bust. Dealer wins.";
-
-      } else {
-        return;
       }
+    }
+    if (this.score > 21) {
+      showResult();
+      result.innerText = "You bust. Dealer wins.";
+    } else {
+      return;
     }
   }
 }
+
 
 //*  DEALER CLASS ---------------------------------------------------------------------------
 
@@ -113,9 +114,6 @@ class Dealer {
     for (let i = 0; i < this.hand.length; i++) {
       const card = this.hand[i];
       this.score += card;
-        if (this.hand[i] === 11 && this.score > 21) {
-          this.score -= 10;
-        } 
       }
   }
   checkFor21OnDeal() {
@@ -128,12 +126,15 @@ class Dealer {
   }
   checkHand() {
     this.addScore();
-      if (this.score > 21) {
-        showResult();
-        result.innerText = "Dealer busts. You win!";
- 
-      }
-    
+    for (let i = 0; i < this.hand.length; i++) {
+      if (this.hand[i] == 11 && this.score > 21) {
+      this.score -= 10;
+      } 
+    }
+    if (this.score > 21) {
+      showResult();
+      result.innerText = "Dealer busts. You win!";
+    }
     if (this.score < 17) {
       dealCard(dealer, this.hand);
       this.addScore();
@@ -313,17 +314,17 @@ stand.addEventListener("click", () => {
   } 
   if (result.innerText.indexOf("win") === -1) {
       setTimeout(() => {
-      newDealer.checkHand();
+        newDealer.checkHand();
     }, 1000);
   }
   if (result.innerText.indexOf("win") === -1) {
       setTimeout(() => {
-      newDealer.checkHand();
+        newDealer.checkHand();
     }, 1000);
   }
   if (result.innerText.indexOf("win") === -1) {
       setTimeout(() => {
-      newDealer.checkHand();
+        newDealer.checkHand();
     }, 1000);
   }
 });
