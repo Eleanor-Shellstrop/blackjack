@@ -1,8 +1,10 @@
 # Blackjack
 Project by Anne Ensign
 
-## Classic "21" game
+## Classic "21" Game
 A casino favorite!
+
+**DEMO HERE:** https://eleanor-shellstrop.github.io/blackjack/
 
 ## App Play
 Enter your name upon beginning the game. 
