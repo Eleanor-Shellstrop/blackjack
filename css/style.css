@@ -135,7 +135,7 @@ button {
     border-radius: 15px;
     padding: 15px 15px 5px 15px;
     margin: 10px;
-    background-color: #E4DFE8;
+    background-color: lightpink;
     border: none;
     box-shadow: 0 2px 2px dimgray;
 
@@ -157,5 +157,39 @@ button:active {
     button:hover {
         background-color: palevioletred;
         color: whitesmoke;
+    }
+}
+
+
+/*  Tablet size */
+@media (min-width: 768px) {
+    .board {
+        min-height: 80vh;
+    }
+    .board h2 {
+        font-size: 2.5em;
+    }
+    #playerNameAndChips {
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+        padding-top: 10px;
+        border-top: 6px dotted deeppink;
+    }
+    #playerChips {
+        width: inherit;
+        font-size: 2em;
+    }
+    #buttonGroup {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    button {
+        width: 125px;
+        font-size: 1.5rem;
+    }
+    #endGame {
+        transform: translateY(-600px);
     }
 }
