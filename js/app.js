@@ -70,6 +70,9 @@ class Player {
   }
   getName() {
     const playerName = prompt("Player name: ");
+    if (playerName == null) {
+      playerName = "Player";
+    }
     document.getElementById("playerName").innerText = playerName + "'s Hand";
   }
   addScore() {
