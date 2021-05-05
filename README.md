@@ -31,10 +31,10 @@ Deck is stacked with four 52-card "decks," as is a casino standard. For example,
 
 ## Game Rules:
 
-Two cards are dealt to Player and Dealer. Dealer's first card is "face-down."
+:spades: Two cards are dealt to Player and Dealer. Dealer's first card is "face-down."
 
-Player can hit until they stand or goes bust.
+:diamonds: Player can hit until they stand or goes bust.
 
-If Dealer's hand total is 16 or less, Dealer must hit. At 17 or more, Dealer must stand. 
+:clubs: If Dealer's hand total is 16 or less, Dealer must hit. At 17 or more, Dealer must stand. 
 
-Winner is the closest to 21 total without going over. 
+:hearts: Winner is the closest to 21 total without going over. 
