@@ -142,7 +142,7 @@ class Dealer {
       dealCard(dealer, this.hand);
       this.addScore();
     }
-    if (this.score > 16 && this.score < 21) {
+    if (this.score > 16 && this.score <= 21) {
       if (newPlayer.score > newDealer.score) {
         showResult();
         result.innerText = "You win!";
