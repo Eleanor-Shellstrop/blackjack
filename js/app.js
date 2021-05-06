@@ -258,7 +258,11 @@ function resetGame() {
   deal.disabled = false;
   removePlayerCards();
   removeDealerCards();
+  // removeCards(player); <--Working
+  // removeCards(dealer); <-- Not working (??)
 }
+
+//  TODO: Figure out why refactoring isn't working here
 
 function removePlayerCards(){
   let cards = player.getElementsByClassName('card');
@@ -270,13 +274,22 @@ function removePlayerCards(){
 }
 
 function removeDealerCards(){
-  let cards = dealer.getElementsByClassName('card container');
+  let cards = dealer.getElementsByClassName('card');
    //   Iterate and remove each child
    for (let i = cards.length - 1; i >= 0; i--) {
        let allCards = cards[i];
        dealer.removeChild(allCards);
    }
 }
+
+//* THIS ISNT WORKING
+// function removeCards(section){
+//   let cards = document.getElementsByClassName('card');
+//   for (let i = cards.length - 1; i >= 0; i--) {
+//       let allCards = cards[i];
+//       section.removeChild(allCards);
+//   }
+// }
 
 //*  EVENT LISTENERS ---------------------------------------------------------------
 
