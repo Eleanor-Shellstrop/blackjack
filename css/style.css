@@ -161,6 +161,7 @@ button:active {
     button:hover {
         background-color: palevioletred;
         color: whitesmoke;
+        text-shadow: none;
     }
 }
 
