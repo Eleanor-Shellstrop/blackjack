@@ -185,17 +185,21 @@ class Dealer {
 //*  GLOBAL VARIABLES  -------------------------------------------------------------
 
 const board = document.getElementById("board");
+
 const deal = document.getElementById("deal");
 const hit = document.getElementById("hit");
+const stand = document.getElementById("stand");
+
 const dealer = document.getElementById("dealer");
 const player = document.getElementById("player");
+
 let playerChips = document.getElementById("playerChips");
 let chips = 100;
+
 const endGame = document.getElementById("endGame");
 const result = document.getElementById("result");
 const playAgain = document.getElementById("playAgain");
-//  No idea why right now- when I call the "Stand" button, it doesn't work right. 
-//  Not calling it, the button works
+
 
 //*  GLOBAL FUNCTIONS  -------------------------------------------------------------
 

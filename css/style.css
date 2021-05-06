@@ -206,6 +206,7 @@ button:active {
 
 @media (min-width: 1200px) {
     .board {
+        min-height: auto;
         justify-content: space-evenly;
     }
     #dealerSection,
@@ -222,6 +223,7 @@ button:active {
         font-size: 1.5em;
     }
     #buttonGroup {
+        margin: 50px 0px;
         justify-content: flex-end;
     }
     button {
