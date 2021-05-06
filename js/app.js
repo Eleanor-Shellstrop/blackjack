@@ -139,7 +139,7 @@ class Dealer {
       result.innerText = "Dealer busts. You win!";
     }
     if (this.score < 17) {
-      dealCard(dealer, this.hand);
+      dealCard(dealer, this.hand); 
       this.addScore();
     }
     if (this.score > 16 && this.score <= 21) {
@@ -219,6 +219,9 @@ playerChips.innerText = "Chips: $" + chips;
 
 function updateChips(){
   if (result.innerText.includes("win")) {
+    if (chips <= 0) {
+      chips = 100;
+    }
     if (result.innerText.includes('!')) {
       chips += 5;
       playerChips.innerText = "Chips: $" + chips;
@@ -305,31 +308,24 @@ hit.addEventListener("click", () => {
 //------------------------------
 //  Stand button
 
+function dealAsNeededToDealer () {
+  if (result.innerText.indexOf("win") === -1) {
+      setTimeout(() => {
+        newDealer.checkHand();
+      }, 1000);
+  }
+}
+
 stand.addEventListener("click", () => {
   dealer.firstElementChild.classList.toggle("back");
   setTimeout(() => {
     newDealer.checkHand();
   }, 1000);
-  if (result.innerText.indexOf("win") === -1) {
-      setTimeout(() => {
-        newDealer.checkHand();
-      }, 1000);
-  } 
-  if (result.innerText.indexOf("win") === -1) {
-      setTimeout(() => {
-        newDealer.checkHand();
-    }, 1000);
-  }
-  if (result.innerText.indexOf("win") === -1) {
-      setTimeout(() => {
-        newDealer.checkHand();
-    }, 1000);
-  }
-  if (result.innerText.indexOf("win") === -1) {
-      setTimeout(() => {
-        newDealer.checkHand();
-    }, 1000);
-  }
+  dealAsNeededToDealer();
+  dealAsNeededToDealer();
+  dealAsNeededToDealer();
+  dealAsNeededToDealer();
+  dealAsNeededToDealer();
 });
 
  
