@@ -70,6 +70,7 @@ class Player {
   }
   getName() {
     let playerName = prompt("Player name: ");
+    // If no name entered
     if (playerName == null || playerName == "") {
       playerName = "Player";
     }
@@ -127,6 +128,7 @@ class Dealer {
 
     }
   }
+  //  For automated draw after Player's turn
   checkHand() {
     this.addScore();
     for (let i = 0; i < this.hand.length; i++) {
@@ -192,7 +194,8 @@ let chips = 100;
 const endGame = document.getElementById("endGame");
 const result = document.getElementById("result");
 const playAgain = document.getElementById("playAgain");
-
+//  No idea why right now- when I call the "Stand" button, it doesn't work right. 
+//  Not calling it, the button works
 
 //*  GLOBAL FUNCTIONS  -------------------------------------------------------------
 
