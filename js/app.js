@@ -206,6 +206,10 @@ const deal = document.getElementById("deal");
 const hit = document.getElementById("hit");
 const stand = document.getElementById("stand");
 
+deal.disabled = false;
+hit.disabled = true;
+stand.disabled = true;
+
 const dealer = document.getElementById("dealer");
 const player = document.getElementById("player");
 
@@ -306,6 +310,8 @@ deal.addEventListener("click", () => {
     newDealer.addScore();
     newPlayer.checkFor21OnDeal();
     newDealer.checkFor21OnDeal();
+    hit.disabled = false;
+    stand.disabled = false;
 });
 
 //------------------------------
@@ -331,6 +337,8 @@ function dealAsNeededToDealer () {
 }
 
 stand.addEventListener("click", () => {
+  hit.disabled = true;
+  stand.disabled = true;
   dealer.firstElementChild.classList.toggle("back");
   setTimeout(() => {
     newDealer.checkHand();
