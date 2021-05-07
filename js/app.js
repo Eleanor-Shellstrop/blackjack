@@ -103,6 +103,14 @@ class Player {
       return;
     }
   }
+  removeCards(){
+    let player = document.getElementById('player');
+    let cards = player.getElementsByClassName('card');
+     for (let i = cards.length - 1; i >= 0; i--) {
+         let allCards = cards[i];
+         player.removeChild(allCards);
+     }
+  }
 }
 
 
@@ -162,6 +170,14 @@ class Dealer {
         return;
       }
     }
+  }
+  removeCards(){
+    let dealer = document.getElementById('dealer');
+    let cards = dealer.getElementsByClassName('card');
+     for (let i = cards.length - 1; i >= 0; i--) {
+         let allCards = cards[i];
+         dealer.removeChild(allCards);
+     }
   }
 }
   
@@ -263,40 +279,9 @@ function resetGame() {
   newPlayer.score = 0;
   newDealer.score = 0;
   deal.disabled = false;
-  removePlayerCards();
-  removeDealerCards();
-  // removeCards(player); <--Working
-  // removeCards(dealer); <-- Not working (??)
+  newPlayer.removeCards();
+  newDealer.removeCards();
 }
-
-//  TODO: Figure out why refactoring isn't working here
-
-function removePlayerCards(){
-  let cards = player.getElementsByClassName('card');
-   //   Iterate and remove each child
-   for (let i = cards.length - 1; i >= 0; i--) {
-       let allCards = cards[i];
-       player.removeChild(allCards);
-   }
-}
-
-function removeDealerCards(){
-  let cards = dealer.getElementsByClassName('card');
-   //   Iterate and remove each child
-   for (let i = cards.length - 1; i >= 0; i--) {
-       let allCards = cards[i];
-       dealer.removeChild(allCards);
-   }
-}
-
-//* THIS ISNT WORKING
-// function removeCards(section){
-//   let cards = document.getElementsByClassName('card');
-//   for (let i = cards.length - 1; i >= 0; i--) {
-//       let allCards = cards[i];
-//       section.removeChild(allCards);
-//   }
-// }
 
 //*  EVENT LISTENERS ---------------------------------------------------------------
 
@@ -329,6 +314,7 @@ hit.addEventListener("click", () => {
 //  Stand button
 
 function dealAsNeededToDealer () {
+  // "win" appears in every outcome
   if (result.innerText.indexOf("win") === -1) {
       setTimeout(() => {
         newDealer.checkHand();
