@@ -281,6 +281,14 @@ function resetGame() {
   deal.disabled = false;
   newPlayer.removeCards();
   newDealer.removeCards();
+  //  If cards low, make four new decks 
+  if (newDeck.cards <= 12) {
+    newDeck.createDeck();
+    newDeck.createDeck();
+    newDeck.createDeck();
+    newDeck.createDeck();
+    newDeck.shuffle();
+  }
 }
 
 //*  EVENT LISTENERS ---------------------------------------------------------------
