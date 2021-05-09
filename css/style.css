@@ -139,7 +139,7 @@ button {
     border-radius: 15px;
     padding: 15px 15px 5px 15px;
     margin: 10px;
-    background-color: lightpink;
+    background-color: #f5e982;
     border: none;
     box-shadow: 0 2px 2px dimgray;
     text-shadow: 2px 2px 2px white;
@@ -233,5 +233,6 @@ button:active {
     }
     button {
         margin: 0px 20px;
+        background-color: lightpink;
     }
 }
